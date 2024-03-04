@@ -2,282 +2,282 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/vi/</loc>
+    <loc>/vi/</loc>
     <lastmod>1970-01-01T07:33:41+07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/"
+                href="/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/"
+                href="/vi/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/5-cloulfrontandacm/5.1-config-cloudfront-distribution/</loc>
+    <loc>/vi/5-cloulfrontandacm/5.1-config-cloudfront-distribution/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/5-cloulfrontandacm/5.1-config-cloudfront-distribution/"
+                href="/5-cloulfrontandacm/5.1-config-cloudfront-distribution/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/5-cloulfrontandacm/5.1-config-cloudfront-distribution/"
+                href="/vi/5-cloulfrontandacm/5.1-config-cloudfront-distribution/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/1-introduce/</loc>
+    <loc>/vi/1-introduce/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/1-introduce/"
+                href="/1-introduce/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/1-introduce/"
+                href="/vi/1-introduce/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/6-autodeploywithgithubactions/6.1-create-iam-user-and-policy/</loc>
+    <loc>/vi/6-autodeploywithgithubactions/6.1-create-iam-user-and-policy/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/6-autodeploywithgithubactions/6.1-create-iam-user-and-policy/"
+                href="/6-autodeploywithgithubactions/6.1-create-iam-user-and-policy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/6-autodeploywithgithubactions/6.1-create-iam-user-and-policy/"
+                href="/vi/6-autodeploywithgithubactions/6.1-create-iam-user-and-policy/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-hoststaticwebsitewiths3/3.1-create-s3-bucket/</loc>
+    <loc>/vi/3-hoststaticwebsitewiths3/3.1-create-s3-bucket/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-hoststaticwebsitewiths3/3.1-create-s3-bucket/"
+                href="/3-hoststaticwebsitewiths3/3.1-create-s3-bucket/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-hoststaticwebsitewiths3/3.1-create-s3-bucket/"
+                href="/vi/3-hoststaticwebsitewiths3/3.1-create-s3-bucket/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/2-prerequiste/</loc>
+    <loc>/vi/2-prerequiste/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/2-prerequiste/"
+                href="/2-prerequiste/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/2-prerequiste/"
+                href="/vi/2-prerequiste/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/6-autodeploywithgithubactions/6.2-config-hugo-deploy/</loc>
+    <loc>/vi/6-autodeploywithgithubactions/6.2-config-hugo-deploy/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/6-autodeploywithgithubactions/6.2-config-hugo-deploy/"
+                href="/6-autodeploywithgithubactions/6.2-config-hugo-deploy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/6-autodeploywithgithubactions/6.2-config-hugo-deploy/"
+                href="/vi/6-autodeploywithgithubactions/6.2-config-hugo-deploy/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-hoststaticwebsitewiths3/3.2-upload-website-to-s3/</loc>
+    <loc>/vi/3-hoststaticwebsitewiths3/3.2-upload-website-to-s3/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-hoststaticwebsitewiths3/3.2-upload-website-to-s3/"
+                href="/3-hoststaticwebsitewiths3/3.2-upload-website-to-s3/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-hoststaticwebsitewiths3/3.2-upload-website-to-s3/"
+                href="/vi/3-hoststaticwebsitewiths3/3.2-upload-website-to-s3/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/5-cloulfrontandacm/5.2-update-bucket-policy/</loc>
+    <loc>/vi/5-cloulfrontandacm/5.2-update-bucket-policy/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/5-cloulfrontandacm/5.2-update-bucket-policy/"
+                href="/5-cloulfrontandacm/5.2-update-bucket-policy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/5-cloulfrontandacm/5.2-update-bucket-policy/"
+                href="/vi/5-cloulfrontandacm/5.2-update-bucket-policy/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-hoststaticwebsitewiths3/3.3-config-block-public-access-and-policy/</loc>
+    <loc>/vi/3-hoststaticwebsitewiths3/3.3-config-block-public-access-and-policy/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-hoststaticwebsitewiths3/3.3-config-block-public-access-and-policy/"
+                href="/3-hoststaticwebsitewiths3/3.3-config-block-public-access-and-policy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-hoststaticwebsitewiths3/3.3-config-block-public-access-and-policy/"
+                href="/vi/3-hoststaticwebsitewiths3/3.3-config-block-public-access-and-policy/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-hoststaticwebsitewiths3/</loc>
+    <loc>/vi/3-hoststaticwebsitewiths3/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-hoststaticwebsitewiths3/"
+                href="/3-hoststaticwebsitewiths3/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-hoststaticwebsitewiths3/"
+                href="/vi/3-hoststaticwebsitewiths3/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/5-cloulfrontandacm/5.3-check-cloudfront/</loc>
+    <loc>/vi/5-cloulfrontandacm/5.3-check-cloudfront/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/5-cloulfrontandacm/5.3-check-cloudfront/"
+                href="/5-cloulfrontandacm/5.3-check-cloudfront/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/5-cloulfrontandacm/5.3-check-cloudfront/"
+                href="/vi/5-cloulfrontandacm/5.3-check-cloudfront/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/6-autodeploywithgithubactions/6.3-create-workflow-with-github-action/</loc>
+    <loc>/vi/6-autodeploywithgithubactions/6.3-create-workflow-with-github-action/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/6-autodeploywithgithubactions/6.3-create-workflow-with-github-action/"
+                href="/6-autodeploywithgithubactions/6.3-create-workflow-with-github-action/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/6-autodeploywithgithubactions/6.3-create-workflow-with-github-action/"
+                href="/vi/6-autodeploywithgithubactions/6.3-create-workflow-with-github-action/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/5-cloulfrontandacm/5.4-update-route53-record-set/</loc>
+    <loc>/vi/5-cloulfrontandacm/5.4-update-route53-record-set/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/5-cloulfrontandacm/5.4-update-route53-record-set/"
+                href="/5-cloulfrontandacm/5.4-update-route53-record-set/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/5-cloulfrontandacm/5.4-update-route53-record-set/"
+                href="/vi/5-cloulfrontandacm/5.4-update-route53-record-set/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-hoststaticwebsitewiths3/3.4-enable-static-website-hosting/</loc>
+    <loc>/vi/3-hoststaticwebsitewiths3/3.4-enable-static-website-hosting/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-hoststaticwebsitewiths3/3.4-enable-static-website-hosting/"
+                href="/3-hoststaticwebsitewiths3/3.4-enable-static-website-hosting/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-hoststaticwebsitewiths3/3.4-enable-static-website-hosting/"
+                href="/vi/3-hoststaticwebsitewiths3/3.4-enable-static-website-hosting/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/6-autodeploywithgithubactions/6.4-test-results/</loc>
+    <loc>/vi/6-autodeploywithgithubactions/6.4-test-results/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/6-autodeploywithgithubactions/6.4-test-results/"
+                href="/6-autodeploywithgithubactions/6.4-test-results/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/6-autodeploywithgithubactions/6.4-test-results/"
+                href="/vi/6-autodeploywithgithubactions/6.4-test-results/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/4-route53/</loc>
+    <loc>/vi/4-route53/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/4-route53/"
+                href="/4-route53/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/4-route53/"
+                href="/vi/4-route53/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/5-cloulfrontandacm/5.5-check-connection/</loc>
+    <loc>/vi/5-cloulfrontandacm/5.5-check-connection/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/5-cloulfrontandacm/5.5-check-connection/"
+                href="/5-cloulfrontandacm/5.5-check-connection/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/5-cloulfrontandacm/5.5-check-connection/"
+                href="/vi/5-cloulfrontandacm/5.5-check-connection/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/5-cloulfrontandacm/</loc>
+    <loc>/vi/5-cloulfrontandacm/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/5-cloulfrontandacm/"
+                href="/5-cloulfrontandacm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/5-cloulfrontandacm/"
+                href="/vi/5-cloulfrontandacm/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/6-autodeploywithgithubactions/</loc>
+    <loc>/vi/6-autodeploywithgithubactions/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/6-autodeploywithgithubactions/"
+                href="/6-autodeploywithgithubactions/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/6-autodeploywithgithubactions/"
+                href="/vi/6-autodeploywithgithubactions/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/7-cleanup/</loc>
+    <loc>/vi/7-cleanup/</loc>
     <lastmod>1970-01-01T07:33:41+07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/7-cleanup/"
+                href="/7-cleanup/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/7-cleanup/"
+                href="/vi/7-cleanup/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/categories/</loc>
+    <loc>/vi/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/categories/"
+                href="/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/categories/"
+                href="/vi/categories/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/tags/</loc>
+    <loc>/vi/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/tags/"
+                href="/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/tags/"
+                href="/vi/tags/"
                 />
   </url>
 </urlset>

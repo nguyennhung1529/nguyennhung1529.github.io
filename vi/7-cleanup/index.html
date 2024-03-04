@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi" class="js csstransforms3d">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.123.1">
@@ -12,21 +12,21 @@
     <title>Dọn dẹp tài nguyên :: AWS System Manager</title>
 
     
-    <link href="/css/nucleus.css?1709549801" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1709549801" rel="stylesheet">
-    <link href="/css/hybrid.css?1709549801" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1709549801" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1709549801" rel="stylesheet">
-    <link href="/css/auto-complete.css?1709549801" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1709549801" rel="stylesheet">
-    <link href="/css/theme.css?1709549801" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1709549801" rel="stylesheet">
+    <link href="/css/nucleus.css?1709559687" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1709559687" rel="stylesheet">
+    <link href="/css/hybrid.css?1709559687" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1709559687" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1709559687" rel="stylesheet">
+    <link href="/css/auto-complete.css?1709559687" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1709559687" rel="stylesheet">
+    <link href="/css/theme.css?1709559687" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1709559687" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1709549801" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1709559687" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1709549801"></script>
+    <script src="/js/jquery-3.3.1.min.js?1709559687"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1709549801"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1709549801"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1709559687"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1709559687"></script>
 <script type="text/javascript">
     
-        var baseurl = "\/\/localhost:1313\/\/vi";
+        var baseurl = "\/\/vi";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1709549801"></script>
+<script type="text/javascript" src="/js/search.js?1709559687"></script>
 
     
   </div>
@@ -691,7 +691,7 @@
                   
                     
                     
-                      <option id="en" value="//localhost:1313/7-cleanup/">English</option>
+                      <option id="en" value="/7-cleanup/">English</option>
                     
                   
               
@@ -705,7 +705,7 @@
                   
                     
                     
-                      <option id="vi" value="//localhost:1313/vi/7-cleanup/" selected>Tiếng Việt</option>
+                      <option id="vi" value="/vi/7-cleanup/" selected>Tiếng Việt</option>
                     
                   
               
@@ -837,12 +837,70 @@
 
 
 	<p>Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.</p>
-<h4 id="clear-s3-bucket">Clear S3 bucket</h4>
-<h4 id="xóa-s3-bucket">Xóa S3 bucket</h4>
-<h4 id="xóa-cloudfront-distribution">Xóa CloudFront Distribution</h4>
-<h4 id="xóa-acm-certificate">Xóa ACM Certificate</h4>
-<h4 id="xóa-dns-record-sets">Xóa DNS record sets</h4>
-<h4 id="xóa-user-và-policies">Xóa User và Policies</h4>
+<h4 id="1-clear-s3-bucket">1. Clear S3 bucket</h4>
+<ul>
+<li>Truy cập <a href="https://s3.console.aws.amazon.com/s3/home">S3 console</a>.</li>
+<li>Tích chọn S3 bucket của bạn, và click vào <strong>Empty</strong>.
+<img alt="S3" src="/images/7.clean/001-S3-empty-s3-bucket.png"></li>
+<li>Nhập <strong>permanently delete</strong>.</li>
+<li>Click <strong>Empty</strong>.
+<img alt="S3" src="/images/7.clean/002-S3-empty-s3-bucket.png"></li>
+</ul>
+<h4 id="2-xóa-s3-bucket">2. Xóa S3 bucket</h4>
+<ul>
+<li>Truy cập <a href="https://s3.console.aws.amazon.com/s3/home">S3 console</a>.</li>
+<li>Tích chọn S3 bucket của bạn, và click vào <strong>Delete</strong>.
+<img alt="S3" src="/images/7.clean/003-S3-delete-s3-bucket.png"></li>
+<li>Nhập tên bucket của bạn.</li>
+<li>Click <strong>Delete bucket</strong>.
+<img alt="S3" src="/images/7.clean/004-S3-delete-s3-bucket.png"></li>
+</ul>
+<h4 id="3-xóa-cloudfront-distribution">3. Xóa CloudFront Distribution</h4>
+<ul>
+<li>Truy cập <a href="https://us-east-1.console.aws.amazon.com/cloudfront/v4/home">Cloufront console</a>.</li>
+<li>Tích chọn Cloufront distribution cần disable, và click vào <strong>Diable</strong>.
+<img alt="CF" src="/images/7.clean/005-CF-disable-CF-distribution.png"></li>
+<li>Click <strong>Disable</strong>.
+<img alt="CF" src="/images/7.clean/005-CF-disable-CF-distribution.png"></li>
+<li>Chờ cho tới khi Cloudfront distribution diasble (bạn có thể xem ở phần <strong>Last modified</strong>, nếu hiển thị ngày giờ thì tức đã disable thành công).</li>
+<li>Quay trở lại <a href="https://us-east-1.console.aws.amazon.com/cloudfront/v4/home">Cloufront console</a>. Tích chọn Cloufront distribution cần delete, và click vào <strong>Delete</strong>.
+<img alt="CF" src="/images/7.clean/007-CF-delete-CF-distribution.png"></li>
+<li>Click <strong>Delete</strong>.
+<img alt="CF" src="/images/7.clean/008-CF-delete-CF-distribution.png"></li>
+</ul>
+<h4 id="5-xóa-dns-record-sets">5. Xóa DNS record sets</h4>
+<ul>
+<li>Truy cập <a href="https://us-east-1.console.aws.amazon.com/route53/v2/home">Route 53</a>.</li>
+<li>Chọn <strong>Hosted zones</strong> ở trên thanh điều hướng phía bên trái.</li>
+<li>Click chọn hosted zones của bạn.</li>
+<li>Chọn các records mà bạn đã tạo, và click <strong>Delete records</strong>.
+<img alt="Route53" src="/images/7.clean/009-Route53-delete-record.png"></li>
+<li>Click <strong>Delete</strong>.
+<img alt="Route53" src="/images/7.clean/010-Route53-delete-record.png"></li>
+</ul>
+<h4 id="6-xóa-user-và-policies">6. Xóa User và Policies</h4>
+<h5 id="xóa-user-bạn-đã-tạo-ở-bước-trước-đấy">Xóa User bạn đã tạo ở bước trước đấy</h5>
+<ul>
+<li>Truy cập IAM console.</li>
+<li>Truy cập <strong>Users</strong>.</li>
+<li>Chọn user <code>GitHub-Actions</code>.</li>
+<li>Click <strong>Delete</strong>.
+<img alt="IAM" src="/images/7.clean/011-IAM-delete-user.png"></li>
+<li>Nhập tên user.</li>
+<li>Click <strong>Delete</strong>.
+<img alt="IAM" src="/images/7.clean/012-IAM-delete-user.png"></li>
+</ul>
+<h5 id="xóa-policy-bạn-đã-tạo-ở-bước-trước-đấy">Xóa Policy bạn đã tạo ở bước trước đấy</h5>
+<ul>
+<li>Truy cập IAM console.</li>
+<li>Truy cập <strong>Policies</strong>.</li>
+<li>Chọn policy <code>DeployWebsite</code>.</li>
+<li>Click <strong>Delete</strong>.
+<img alt="IAM" src="/images/7.clean/013-IAM-delete-policy.png"></li>
+<li>Nhập tên policy.</li>
+<li>Click <strong>Delete</strong>.
+<img alt="IAM" src="/images/7.clean/014-IAM-delete-policy.png"></li>
+</ul>
 
 
 
@@ -1230,19 +1288,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1709549801"></script>
-    <script src="/js/perfect-scrollbar.min.js?1709549801"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1709549801"></script>
-    <script src="/js/jquery.sticky.js?1709549801"></script>
-    <script src="/js/featherlight.min.js?1709549801"></script>
-    <script src="/js/highlight.pack.js?1709549801"></script>
+    <script src="/js/clipboard.min.js?1709559687"></script>
+    <script src="/js/perfect-scrollbar.min.js?1709559687"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1709559687"></script>
+    <script src="/js/jquery.sticky.js?1709559687"></script>
+    <script src="/js/featherlight.min.js?1709559687"></script>
+    <script src="/js/highlight.pack.js?1709559687"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1709549801"></script>
-    <script src="/js/learn.js?1709549801"></script>
-    <script src="/js/hugo-learn.js?1709549801"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1709559687"></script>
+    <script src="/js/learn.js?1709559687"></script>
+    <script src="/js/hugo-learn.js?1709559687"></script>
 
-    <link href="/mermaid/mermaid.css?1709549801" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1709549801"></script>
+    <link href="/mermaid/mermaid.css?1709559687" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1709559687"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>
