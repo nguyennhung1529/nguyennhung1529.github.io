@@ -1,7 +1,7 @@
 [
 {
 	"uri": "/",
-	"title": "Session Management",
+	"title": "Host website tĩnh trên AWS",
 	"tags": [],
 	"description": "",
 	"content": "Host website tĩnh trên AWS Trong bài lab này, bạn sẽ tìm hiểu về Hugo, S3, CloudFront, AWS Certificate Manager, và Route 53. Tiến hành quản lý một website tĩnh trên AWS một cách an toàn.\nDưới đây là tổng quan kiến trúc mà chúng ta sẽ xây dựng Nội dung Giới thiệu Các bước chuẩn bị Host website tĩnh trên S3 CloudFront và TLS certification DNS với Route 53 Tự động deploy với Github Actions Dọn dẹp tài nguyên Tài liệu tham khảo https://docs.aws.amazon.com/whitepapers/latest/build-static-websites-aws/using-https-with-amazon-cloudfront.html https://000057.awsstudygroup.com/vi/ "
