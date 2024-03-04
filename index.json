@@ -1,0 +1,162 @@
+[
+{
+	"uri": "//localhost:1313/",
+	"title": "Session Management",
+	"tags": [],
+	"description": "",
+	"content": "Host website tĩnh trên AWS Trong bài lab này, bạn sẽ tìm hiểu về Hugo, S3, CloudFront, AWS Certificate Manager, và Route 53. Tiến hành quản lý một website tĩnh trên AWS một cách an toàn.\nDưới đây là tổng quan kiến trúc mà chúng ta sẽ xây dựng Nội dung Giới thiệu Các bước chuẩn bị Host website tĩnh trên S3 CloudFront và TLS certification DNS với Route 53 Tự động deploy với Github Actions Dọn dẹp tài nguyên Tài liệu tham khảo https://docs.aws.amazon.com/whitepapers/latest/build-static-websites-aws/using-https-with-amazon-cloudfront.html https://000057.awsstudygroup.com/vi/ "
+},
+{
+	"uri": "//localhost:1313/5-cloulfrontandacm/5.1-config-cloudfront-distribution/",
+	"title": "Cấu hình CloudFront Distribution",
+	"tags": [],
+	"description": "",
+	"content": "Trong bước này, bạn sẽ CloudFront distribution và cấu hình dịch vụ này phục vụ s3 Bucket mà chúng ta đã tạo trước đó.\n1. Truy cập Amazon CloudFront console. 2. Click vào Create distribution. 3. Chỉ định các cài đặt sau cho distribution: Cách ưu tiên để cho phép truy cập vào S3 Bucket là thông qua Origin Access Identity. Nhưng nếu S3 bucket được config như là một website endpoint, thì chúng ta phải dùng Custom Headers để giới hạn quyền truy cập vào S3 Bucket. Trong lab này, chúng ta sẽ khai báo User-Agent header trong Cloudfront với một khóa bí mật (secret key), giúp block truy cập tới bucket từ mọi người khác, và sẽ chỉ cho phép CloudFront (có header mang thông tin khóa) sẽ được truy cập S3 bucket.\nTại Origin domain, chọn S3 bucket mà bạn đã tạo, sau đó chọn Use website endpoint. Trong Cloudfront distribution, chúng ta không thể sử dụng trực tiếp S3 bucket endpoint cho static website. Tên Origin Domain nên được trỏ tới S3-website endpoint tại đúng region.\nTại Add custom header - optional, click Add header:\nHeader Name = User-Agent. Value = \u0026lt;khóa-bí-mật-tự-định-nghĩa\u0026gt;. Tại phần Default cache behavior \u0026gt; Viewer protocol policy, tích chọn Redirect HTTP to HTTPS. Tại phần Web Application Firewall (WAF), chọn Enable security protections. Trong phần Settings, chọn Use only North America and Europe (Rẻ nhất).\nTại Alternate domain name (CNAME), điền domain name của website. Tại Custom SSL certificate, trỏ vào Request certificate, một cửa sổ mới request certificate của ACM hiện lên. Chúng ta sẽ tạm dừng để setting cho SSL certificate trước:\nTại cửa sổ Request certificate, chọn Next =\u0026gt; config certificate. Domain names: Điền domain name của website. Có thể add tag để về sau dễ quản lý. Click Request. Tại mục List certificate, chọn certificate vừa mới request Chọn Create records in Route 53 Tại trang Create DNS records in Amazon Route 53, chọn Create Record Mở Route 53 \u0026gt; Hosted zone \u0026gt; chọn Hosted zone của bạn, bạn sẽ thấy một record CNAME của certificate mới vừa được add vào. Tại ACM console \u0026gt; List certificate, bạn sẽ thấy trạng thái của certificate bạn vừa mới register. Khi nào trạng thái là issued, thì certificate này đã có thể được sử dụng. Sau khi đã tạo certificate mới thành công, tiếp tục với mục Setting của Cloudfront Distribution, tại Custom SSL certificate, bấm biểu tượng reload \u0026gt; chọn ACM certificate vừa tạo. Kiểm tra lại thông tin config và click Create distribution.\nĐợi vài phút để CloudFront Distribution được deploy thành công. Trong lúc chờ, bạn có thể thực hiện bước 5.2. Cập nhật S3 bucket policy.\n"
+},
+{
+	"uri": "//localhost:1313/1-introduce/",
+	"title": "Giới thiệu",
+	"tags": [],
+	"description": "",
+	"content": "Tổng quan kiến trúc mà chúng ta sẽ xây dựng Trong đó:\nHugo là một công cụ tạo trang web tĩnh (static site generator) rất nhanh và hiệu quả. Đây là một ứng dụng được viết bằng ngôn ngữ lập trình Go, thiết kế để giúp bạn tạo ra các trang web hoặc blog chỉ từ các file văn bản đơn giản (Ví dụ như các file nội dung tĩnh Markdown) mà không cần một cơ sở dữ liệu phức tạp. Amazon S3 (Simple Storage Service): là một dịch vụ lưu trữ đối tượng (object) của AWS, cung cấp độ bảo mật, khả năng chịu lỗi, khả năng scale và availability cao, và giá thành lưu trữ rẻ. S3 thường được sử dụng để lưu trữ và phục vụ các file lớn như hình ảnh, video, hoặc file tải về. Và trong trường hợp này nó được sử dụng để lưu trữ các tệp tin của trang web tĩnh. AWS CloudFront: là một dịch vụ mạng phân phối nội dung (CDN) của AWS giúp phân phối nội dung của trang web tới người dùng với độ trễ thấp và tốc độ cao. CloudFront tích hợp với S3 và cung cấp khả năng phân phối nội dung an toàn qua HTTPS. AWS Certificate Manager (ACM): dùng để cấp phát, quản lý và triển khai chứng chỉ SSL/TLS dùng để mã hóa dữ liệu truyền qua internet (encrypt in transit). Trong mô hình trên, ACM cung cấp chứng chỉ để mã hóa kết nối giữa người dùng (end user) và CloudFront, đảm bảo tính bảo mật. Amazon Route 53: là một dịch vụ DNS web có khả năng định tuyến yêu cầu người dùng tới cơ sở hạ tầng AWS phù hợp, như CloudFront. Nó cũng có thể được sử dụng để quản lý tên miền và các DNS record. GitHub: là nơi để lưu trữ và quản lý source code của website, cung cấp tính năng GitHub Actions, cho phép bạn tự động hóa workflow phát triển phần mềm, bao gồm việc triển khai trang web lên S3. Quy trình tổng thể bắt đầu từ Admin/Editer/Dev thực hiện các thay đổi trên source code và push chúng lên GitHub. GitHub Actions sau đó sẽ thực hiện build website tĩnh và đồng bộ code lên S3. Khi người dùng (end-user) truy cập website thông qua tên miền web, Route 53 sẽ phân giải tên miền đó và hướng requests tới distribution CloudFront. CloudFront sẽ tích hợp với AWS Certificate Manager (ACM) để thêm SSL/TLS certification giúp mã hóa nội dung giao tiếp qua HTTPS \u0026lt;=\u0026gt; thiết lập một kênh truyền dữ liệu an toàn, đảm bảo tính bảo mật của dữ liệu được truyền giữa người dùng (end-user) và CDN.\nMô hình triển khai trên đảm bảo nội dung website được phân phối nhanh chóng (CloudFront), an toàn (HTTPS \u0026amp; SSL/TLS) và được tự động cập nhật nội dung (GitHub Actions).\n"
+},
+{
+	"uri": "//localhost:1313/6-autodeploywithgithubactions/6.1-create-iam-user-and-policy/",
+	"title": "Tạo IAM User với policies quyền deploy và invalidateCDN",
+	"tags": [],
+	"description": "",
+	"content": "Trong phần lab này sẽ hướng dẫn bạn tạo IAM user với quyền thao tác với S3 bucket object và invalidateCDN của CloudFront\nPolicy tùy chỉnh sẽ chỉ cung cấp quyền để push các thay đổi vào S3 bucket và vô hiệu hóa (invalidate) bộ nhớ đệm trên Cloudfront. Việc cấp quyền đủ dùng sẽ đáp ứng được nguyên tắc đặc quyền tối thiêu (Principle of Least Privilege). Nếu access key của user (user chỉ liên kết với policy này) bị leak, thì việc mà các hacker có thể làm nhiều nhất với access key đó là thực hiện các thay đổi đối với S3 bucket và vô hiệu hóa cache của Cloudfront.\nTạo policy cấp quyền thao tác với S3 bucket object và invalidateCDN của CloudFront Truy cập IAM console, chọn Policies ở thanh điều hướng bên trái. Chọn Create policy Tại phần Specify permissions: Chọn JSON Gán policy sau vào Policy editor: {\r\u0026#34;Version\u0026#34;: \u0026#34;2012-10-17\u0026#34;,\r\u0026#34;Statement\u0026#34;: [\r{\r\u0026#34;Sid\u0026#34;: \u0026#34;GithubActionsWebsite\u0026#34;,\r\u0026#34;Effect\u0026#34;: \u0026#34;Allow\u0026#34;,\r\u0026#34;Action\u0026#34;: [\r\u0026#34;s3:ListBucket\u0026#34;,\r\u0026#34;s3:GetObject\u0026#34;,\r\u0026#34;s3:PutObject\u0026#34;,\r\u0026#34;s3:DeleteObject\u0026#34;,\r\u0026#34;cloudfront:CreateInvalidation\u0026#34;\r],\r\u0026#34;Resource\u0026#34;: [\r\u0026#34;arn:aws:s3:::nhungnt3299.cloudjourneys.net\u0026#34;,\r\u0026#34;arn:aws:s3:::nhungnt3299.cloudjourneys.net/*\u0026#34;,\r\u0026#34;\u0026lt;CF-Distribution-ARN\u0026gt;\u0026#34;\r]\r}\r]\r} Click Next. Tại Review and create: Policy name: điền DeployWebsite. Chọn Add new tag: key - project, value - fcj-mission-1. Click Create policy. Tạo User attack tới policy vừa tạo Truy cập IAM console, chọn Users ở thanh điều hướng bên trái. Chọn Create user Tại mục Specify user details: User name: điền GitHub-Actions. Click Next. Tại mục Set permissions: Tại Permissions options, chọn Attach policies directly. Tại Permissions policies, tích chọn policy DeployWebsite vừa mới tạo ở bước trên. Click Next. Tại mục Review and create: Review lại thông tin. Chọn Add new tag: key - project, value - fcj-mission-1. Click Create user. Tạo User Access key Truy cập IAM console, chọn Users ở thanh điều hướng bên trái. Chọn user GitHub-Actions bạn vừa tạo. Tại tab Security credentials \u0026gt; tại mục Access keys, click chọn Create access key Tại mục Access key best practices \u0026amp; alternatives: Chọn Application running outside AWS. Chọn Next. Tại mục Set description tag - optional: Điền mô tả nếu muốn. Click chọn Create access key. Tại mục Retrieve access keys: Click chọn Download .csv file. Lưu file về máy (Ta sẽ dùng access key này để cấp quyền cho GitHub Actions ở phần sau). Click Done. User được tạo sẽ chỉ được sử dụng để cập nhật website và invalidateCDN. Nếu mất access key, bạn phải tạo key mới và vô hiệu hóa access key cũ.\n"
+},
+{
+	"uri": "//localhost:1313/3-hoststaticwebsitewiths3/3.1-create-s3-bucket/",
+	"title": "Tạo S3 bucket",
+	"tags": [],
+	"description": "",
+	"content": "Truy cập vào S3 console.\nClick chọn Create bucket. Tại mục General configuration: AWS Region: . Ở đây mình chọn ap-southeast-1 Bucket name: Tags: Key: \u0026lsquo;project\u0026rsquo;, Value: \u0026lsquo;fcj-mission-1\u0026rsquo;. Click Create bucket. Cần đặt bucket name khớp với custom domain mà bạn đã đăng ký. Do S3 host web tĩnh dựa vào DNS để ánh xạ tên bucket tới web S3 endpoint. Khi bạn sử dụng custom domain như abc.example.com, bạn thường tạo record trong cài đặt DNS trỏ đến abc.example.com.s3-website-region.amazonaws.com. Để tính năng này hoạt động chính xác, tên bucket phải khớp với custom domain. Ví dụ: Nếu bạn sử dụng custom domain là abc.example.com, thì tên S3 bucket tương ứng sẽ là abc.example.com.\n"
+},
+{
+	"uri": "//localhost:1313/2-prerequiste/",
+	"title": "Các bước chuẩn bị",
+	"tags": [],
+	"description": "",
+	"content": "1. Tạo website tĩnh Bước đầu tiên, chúng ta cần tạo website tĩnh, trong lab này chúng ta sẽ sử dụng Hugo làm trình viết web tĩnh. Tham khảo cách viết webs tĩnh bằng Hugo: Workshop\n2. Quản lý source code trên GitHub Bài lab này sẽ dùng GitHub để quản lý source code trong toàn bộ quá trình phát triển website 3. Đăng ký tên miền Trong bài lab này, mình sẽ đăng ký tên miền và sử dụng hosted zone trên Route 53.\nVào Route 53 consoles, truy cập Registered domains. Tại giao diện Registered domains, bấm nút Registered domains. Điền tên miền muốn check, chọn Search. Select tên miền muốn đăng ký, chọn Proceed to checkout. Tại giao diện Pricing: Chọn thời hạn đăng ký tên miền (từ 1 tới 10 năm). Nếu không muốn AWS tự động gia hạn tên miền định kỳ, thì bỏ tick Auto-renew. Kiểm tra thông tin, bấm Next. Tại giao diện Contact information, Điền thông tin liên hệ, và bấm Next. Tại giao diện Review and submit, kiểm tra lại toàn bộ thông tin, bấm Submit. Sau khi bấm Submit, check mail được gửi từ AWS để confirm mail. Và như vậy là bạn đã thành công đăng ký tên miền trên Route 53. Khi bạn đăng ký một tên miền mới trên Amazon Route 53, dịch vụ này sẽ tự động tạo một hosted zone công khai (public hosted zone) cho tên miền đó. Hosted zone này chứa các bản ghi DNS cho tên miền và được quản lý trong Route 53. Mỗi khi bạn thêm, xóa hoặc sửa đổi bản ghi trong hosted zone, những thay đổi đó sẽ giúp định hướng traffic cho tên miền của bạn. Đối với các tên miền đã được đăng ký ở nhà cung cấp khác (VD: GoDaddy, MatBao, .v.v) và bạn muốn quản lý DNS thông qua Route 53, bạn sẽ cần phải tạo một hosted zone và cập nhật các nameserver của tên miền đó để trỏ về nameserver của Route 53.\nTham khảo thêm: Route53\n"
+},
+{
+	"uri": "//localhost:1313/6-autodeploywithgithubactions/6.2-config-hugo-deploy/",
+	"title": "Thiết lập Hugo deploy",
+	"tags": [],
+	"description": "",
+	"content": "Trước khi tạo workflow với GitHub Actions thực hiện update thay đổi trên S3 bucket và invalidateCDN Cloudfront, bạn cần config thêm thông tin. Tại project hugo của bạn, thêm thông tin sau vào file config.toml:\n[deployment]\r[[deployment.targets]]\r# Name of the target\rname = \u0026#34;\u0026lt;Your-Domain\u0026gt;\u0026#34;\r# S3 bucket to deploy to\rURL = \u0026#34;s3://\u0026lt;Your-Bucket-Name\u0026gt;?region=\u0026lt;Your-Region\u0026gt;\u0026#34;\rcloudFrontDistributionID = \u0026#34;\u0026lt;CF-Distribution-ID\u0026gt;\u0026#34;\r[[deployment.matchers]]\r# Only include files from the \u0026#39;public\u0026#39; directory, and cache static assets for 20 years\rpattern = \u0026#34;public/*\u0026#34;\rcacheControl = \u0026#34;max-age=630720000, no-transform, public\u0026#34;\rgzip = true\r[[deployment.matchers]]\rpattern = \u0026#34;^.+\\\\.(html|xml|json)$\u0026#34;\rgzip = true "
+},
+{
+	"uri": "//localhost:1313/3-hoststaticwebsitewiths3/3.2-upload-website-to-s3/",
+	"title": "Upload file lên S3",
+	"tags": [],
+	"description": "",
+	"content": "Hugo hỗ trợ build website tĩnh một cách nhanh chóng. Khi bạn thực hiện lệnh hugo, sẽ có một folder public - nơi chứa toàn bộ khung website được gen dựa trên các file content Markdown mà các bạn đã định nghĩa trước. Và thư mục public cũng là thư mục chứa toàn bộ code cần thiết để tạo website mà chúng ta sẽ đẩy lên S3.\nTại giao diện S3 console, click chọn bucket bạn vừa tạo. Để upload files lên S3, bạn có thể thực hiện ngay trên trình duyệt web hoặc thực hiện thông qua AWS CLI hoặc AWS SDK. Click chọn Upload. Chờ cho đến khi các files được tải lên thành công. "
+},
+{
+	"uri": "//localhost:1313/5-cloulfrontandacm/5.2-update-bucket-policy/",
+	"title": "Cập nhật S3 bucket policy",
+	"tags": [],
+	"description": "",
+	"content": "Cập nhật S3 bucket policy cho phép quyền truy cập chỉ đọc đối với resouce có User-Agent header match với khóa bí mật\nTruy cập S3 console, click chọn bucket của bạn. Tại tab Permisssions \u0026gt; mục Bucket policy, chọn Edit. cập nhật policy như sau: {\r\u0026quot;Version\u0026quot;: \u0026quot;2012-10-17\u0026quot;,\r\u0026quot;Statement\u0026quot;: [\r{\r\u0026quot;Sid\u0026quot;: \u0026quot;AllowCloudfrontHeader\u0026quot;,\r\u0026quot;Effect\u0026quot;: \u0026quot;Allow\u0026quot;,\r\u0026quot;Principal\u0026quot;: \u0026quot;*\u0026quot;,\r\u0026quot;Action\u0026quot;: \u0026quot;s3:GetObject\u0026quot;,\r\u0026quot;Resource\u0026quot;: \u0026quot;arn:aws:s3:::\u0026lt;S3-Bucket-Name\u0026gt;/*\u0026quot;,\r\u0026quot;Condition\u0026quot;: {\r\u0026quot;StringEquals\u0026quot;: {\r\u0026quot;aws:UserAgent\u0026quot;: \u0026quot;\u0026lt;khóa-bí-mật-tự-định-nghĩa\u0026gt;\u0026quot;\r}\r}\r}\r]\r}\rNhư vậy, bạn đã giới hạn quyền truy cập của S3. Dù hiện chúng ta đang Unblock all public access, nhưng để các truy cập public có thể truy cập được S3 sẽ cần xác thực User-Agent header \u0026lt;=\u0026gt; Đã thành công giới hạn quyền truy cập. "
+},
+{
+	"uri": "//localhost:1313/3-hoststaticwebsitewiths3/3.3-config-block-public-access-and-policy/",
+	"title": "Cấu hình block public access và bucket policy",
+	"tags": [],
+	"description": "",
+	"content": "1. Cấu hình block public access Tại giao diện S3 console, click chọn bucket của bạn. Vào tab Permisssions: Tại Block public access (bucket settings), chọn Edit Bỏ tích chọn Block all pulbic access, click nút Save change, và confirm thay đổi 2. Cấu hình S3 bucket policy Tiếp tục tại tab Permisssions: Tại Bucket policy, chọn Edit Khai báo policy như sau: {\r\u0026quot;Version\u0026quot;: \u0026quot;2012-10-17\u0026quot;,\r\u0026quot;Statement\u0026quot;: [{\r\u0026quot;Sid\u0026quot;: \u0026quot;AllowPublicRead\u0026quot;,\r\u0026quot;Effect\u0026quot;: \u0026quot;Allow\u0026quot;,\r\u0026quot;Principal\u0026quot;: \u0026quot;*\u0026quot;,\r\u0026quot;Action\u0026quot;: [\r\u0026quot;s3:GetObject\u0026quot;\r],\r\u0026quot;Resource\u0026quot;: \u0026quot;arn:aws:s3:::YOUR_BUCKET_NAME/*\u0026quot;\r}]\r}\rClick Save change "
+},
+{
+	"uri": "//localhost:1313/3-hoststaticwebsitewiths3/",
+	"title": "Host website tĩnh trên S3",
+	"tags": [],
+	"description": "",
+	"content": "Trong bước này, bạn sẽ tạo và config S3 bucket - nơi host web tĩnh mà bạn tải lên. Nội dung 3.1. Tạo S3 bucket 3.2. Tải website tĩnh lên 3.3. Cấu hình block public access và bucket policy 3.4. Enable Static website hosting\n"
+},
+{
+	"uri": "//localhost:1313/5-cloulfrontandacm/5.3-check-cloudfront/",
+	"title": "Kiểm tra CloudFront",
+	"tags": [],
+	"description": "",
+	"content": " Trong giao diện CloudFront, chọn ID. Tại mục Distribution domain name: Đảm bảo rằng CloudFront đã deploy xong bằng cách xem nội dung ở mục Last modified. Tại Distribution domain name, Copy URL. Bật một tab khác và dán giá trị CloudFront URL vào thanh tìm kiếm rồi nhấn enter. Chúc mừng bạn đã triển khai thành công CloudFront để phân phối một website tĩnh được host trên S3 có xác thực thông qua User-Agent header với khóa bí mật tự quản lý, giúp giới hạn truy cập vào S3 từ các nơi khác.\n"
+},
+{
+	"uri": "//localhost:1313/6-autodeploywithgithubactions/6.3-create-workflow-with-github-action/",
+	"title": "Tạo workflow với GitHub Actions",
+	"tags": [],
+	"description": "",
+	"content": "Để tạo một quy trình tự động cập nhật thay đổi code lên S3 bucket, và tự động invalidateCDN của Cloudfront, trong lab này sẽ hướng dẫn bạn sử dụng GitHub Actions để tự động hóa workflow đó.\nTạo Github workflow config file Tạo Github workflow config YAML file mới tại thư mục .github/workflows/, đặt tên main.yml (bạn có thể đặt tên bất kỳ). Paste vào file main.yml đoạn code dưới đây: name: Deploy to Amazon S3 bucket\ron:\rpush:\rbranches:\r- main\rjobs:\rdeploy:\rruns-on: ubuntu-latest\rsteps:\r- name: Check out the repo\ruses: actions/checkout@v2\r- name: Setup Hugo\ruses: peaceiris/actions-hugo@v2\rwith:\rhugo-version: \u0026#39;latest\u0026#39;\rextended: true\r- name: Configure AWS Credentials\ruses: aws-actions/configure-aws-credentials@v1\rwith:\raws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}\raws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}\raws-region: ${{ secrets.AWS_REGION }}\r- name: Build website\rrun: hugo --minify\r- name: Hugo deploy static site to S3 bucket and invalidate Cloudfront cache\rrun: hugo deploy --maxDeletes -1 --invalidateCDN GitHub Actions sẽ chỉ được kích hoạt khi code được push lên remote nhánh main. Với ubuntu docer container, repository của bạn sẽ được kiểm tra với tất cẩ các submodules cho các themes mà bạn sử dụng. Phiên bản mới nhất của Hugo extended sẽ được cài đặt, thông tin xác thực AWS (AWS Credentials) sẽ được thiết lập, trang web của bạn sẽ được build, và deploy lên AWS.\nĐoạn code trên bạn sẽ giữ nguyên, không điền hay . Secret keys như AWS Credentials không nên được đặt trong code, mà thay vào đó, bạn sẽ quản lý các secret key này với tính năng lưu trữ secure secret của GitHub trong repository của bạn.\nKhai báo và quản lý các secrets trên GitHub Truy cập github, vào repository của bạn. Vào Settings \u0026gt; Secrets and variables \u0026gt; Actions: Click chọn New repository secret. Name = AWS_ACCESS_KEY_ID, Value = \u0026lt;Access-key-ID\u0026gt; (lấy thông tin ở file csv access key mà bạn đã tải về máy ở bước trước đó). Chọn Add Secret. Thực hiện tương tự với secret AWS_SECRET_ACCESS_KEY và AWS_REGION. Như vậy bạn đã thành công tạo workflow GitHub Actions. Tiếp theo, bạn sẽ thử test hoạt động của workflow này.\n"
+},
+{
+	"uri": "//localhost:1313/5-cloulfrontandacm/5.4-update-route53-record-set/",
+	"title": "Cập nhật DNS record",
+	"tags": [],
+	"description": "",
+	"content": "Trong bài lab này sẽ cập nhật Route 53 DNS record để trỏ tên miền của website của bạn tới Cloudfront Distribution.\nTruy cập Route 53 console, chọn Hosted zones ở trên thanh điều hướng phía bên trái. Click chọn hosted zones của bạn. Tại tab Records, click chọn DNS record của website. Tại Record details, chọn Edit record: Route traffic to endpoint: chọn Alias to CloudFront distribution. Choose Distribution: chọn Cloudfront distribution. Chọn Save. Chờ 30-60s để trạng thái chuyển qua INSYNC. Khi đó, bạn có thể thử truy cập vào website bằng domain name. "
+},
+{
+	"uri": "//localhost:1313/3-hoststaticwebsitewiths3/3.4-enable-static-website-hosting/",
+	"title": "Enable static website hosting",
+	"tags": [],
+	"description": "",
+	"content": "1. Enable static website hosting Tại giao diện S3 console, click chọn bucket của bạn. Vào tab Properties: Tại Static website hosting, chọn Edit Tại Static website hosting, chọn Enable. Tại Index document, điền index.html. Tại Error document, điền 404.html. Click nút Save change 2. Truy cập thử website thông qua S3 endpoint Tại giao diện S3 console, click chọn bucket của bạn. Vào tab Properties, tại Static website hosting, truy cập thông qua bucket website endpoint Như vậy, bạn đã thành công host website tĩnh trên S3. "
+},
+{
+	"uri": "//localhost:1313/6-autodeploywithgithubactions/6.4-test-results/",
+	"title": "Kiểm tra workflow",
+	"tags": [],
+	"description": "",
+	"content": "Để kiểm tra workflow GitHub Actions có hoạt động đúng như mong đợi, bạn thực hiện các bước sau:\nCập nhật code dưới local. Commit và push code lên remote nhánh main. Reload lại website xem kết quả. Chúc mừng bạn đã thành công tạo một workflow tự động cập nhật thay đổi của website trên S3 bucket, và tự động invalidateCDN Cloudfront để refresh nội dung website.\n"
+},
+{
+	"uri": "//localhost:1313/4-route53/",
+	"title": "Tên miền với Route 53",
+	"tags": [],
+	"description": "",
+	"content": "\rNhư các bạn có thể thấy ở bước trên chúng ta đã thành công host website tĩnh trên S3, và có thể truy cập vào website đó thông qua S3 website endpoint. Nhưng đường link endpoint đó quá dài và khó nhớ đối với người dùng. Chính vì vậy, trong phần blog này, bạn sẽ tiến hành thiết lập custom domain cho website, để website có thể trở nên thân thiện hơn với người dùng hơn.\nTrong phần này, bạn sẽ tạo và quản lý custom domain trên Route 53, và thiết lập website chúng ta vừa tạo sử dụng tên miền đó. Tạo DNS record cho website Chúng ta sẽ sử dụng dịch vụ DNS của Route 53 để trỏ custome domain tới S3 website endpoint.\nTruy cập Route 53 console, chọn Hosted zones ở trên thanh điều hướng phía bên trái. Click chọn hosted zones mà bạn đã khởi tạo (Tham khảo thực hiện ở bước 1-Yêu cầu chuẩn bị) Tại tab Records, click chọn Create record. Nếu S3 bucket bạn tạo đặt tên là abc.cloudjourneys.com (tương ứng sẽ khớp tên với custome domain bạn khai báo), thì bạn sẽ tạo record set với thông tin sau: Record name: abc. Record type: A. Tick chọn Alias. Route traffic to endpoint: chọn Alias to S3 website endpoint. Route traffic to region: chọn region bạn khởi tạo web bucket. S3 endpoint: chọn S3 endpoint của web bucket tương ứng. Click Create record. Bạn sẽ cần chờ khoảng 30-60s để Route 53 tạo thành công record set. Truy cập website Hiện tại, thay vì truy cập website bằng chuỗi S3 endpoint dài và khó nhớ, bạn đã có thể thay thế bằng tên miền ngắn gọn, đơn giản hơn.\nQuay trở lại giao diện các Records đã tạo, chọn record bạn vừa tạo (record trỏ vào S3 endpoint). Tại góc bên phải, copy record name, và bạn sẽ truy cập website bằng record name này thay thế cho S3 endpoint. Như vậy bạn đã thành công truy cập vào website host bởi S3, thông qua custome domain name mà bạn tạo. Tuy nhiên, bạn có thể thấy, ở góc trên cùng bên trái thanh url, trình duyệt hiện thông báo rằng kết nối của bạn tới website này là không bảo mật. Chỉ với mỗi Route 53, request của người dùng sẽ thông qua giao thức HTTP được chuyển thẳng trực tiếp tới máy chủ hosting, nơi mà S3 bucket đang được lưu trữ, không thông qua bất kỳ phương thức bảo mật nào =\u0026gt; Nguy cơ về mặt an ninh. Và ngoài ra, tại một số điểm cuối của người dùng ở các Region cách xa so với Region host web, tốc độ tải trang web sẽ rất chậm =\u0026gt; Hiệu suất thấp, giảm trải nghiệm người dùng.\nĐể giải quyết vấn đề trên, phần lab tới sẽ hướng dẫn bạn sử dụng CloudFront kết hợp với SSL/TLS certificate được quản lý bởi AWS Certificate Manager (ACM)\n"
+},
+{
+	"uri": "//localhost:1313/5-cloulfrontandacm/5.5-check-connection/",
+	"title": "Kiểm tra kết nối",
+	"tags": [],
+	"description": "",
+	"content": " Mở trình duyệt ẩn danh, truy cập vào tên miền thử với 2 giao thức http và https Có thể thấy dù truy cập bằng protocal http, CloudFront cũng đã tự động điều hướng sang protocal https. Như vậy, bạn đã thành công host website tĩnh được tạo bởi Hugo trên Amazon S3 bucket, sử dụng Route 53 để khai báo và quản lý tên miền của website, đồng thời kết hợp với CloudFront và AWS Certificate Manager (ACM) để tăng cường độ bảo mật, cũng như giảm độ trễ khi truy cập website. Trong các bài lab sau sẽ hướng dẫn bạn cách tự động deploy code khi có sự thay đổi bằng cách tận dụng tính năng GitHub Actions.\n"
+},
+{
+	"uri": "//localhost:1313/5-cloulfrontandacm/",
+	"title": "Tăng tốc và bảo mật kết nối với CloudFront và SSL",
+	"tags": [],
+	"description": "",
+	"content": "Bài lab này sẽ hướng dẫn bạn các bước để lưu trữ nội dung web tĩnh trong Amazon S3 bucket, được bảo vệ và tăng tốc bởi Amazon CloudFront. Ngoài ra, để tăng cường độ bảo mật trên đường truyền, bài lab sẽ hướng dẫn bạn kết hợp CloudFront với chứng chỉ SSL được quản lý bởi AWS Certificate Manager (ACM) giúp mã hóa kết nối HTTPS trong quá trình truyền dữ liệu.\nChi phí Thường ít hơn $ 1 mỗi tháng (tùy thuộc vào số lượng request) Giá Amazon S3 Giá Amazon CloudFront Tài liệu tham khảo Amazon S3 Amazon CloudFront Các bước thực hiện 5.1. Cấu hình CloudFront Distribution 5.2. Cập nhật S3 bucket policy 5.3. Kiểm tra Cloudfront 5.4. Cập nhật Route 53 record set 5.5. Kiểm tra kết nối tới website\n"
+},
+{
+	"uri": "//localhost:1313/6-autodeploywithgithubactions/",
+	"title": "Tự động deploy với GitHub Actions",
+	"tags": [],
+	"description": "",
+	"content": "Giới thiệu Như vậy, bạn đã thành công host một website tĩnh trên S3, sử dụng tên miền tùy chỉnh quản lý bởi Route 53 để tăng độ thân thiện cho phía end-user (người dùng cuối), sử dụng CloudFront để tăng tốc độ và an toàn khi truy cập web phía user, và tích hợp với AWS Certificate Manager (ACM) để cung cấp chứng chỉ SSL/TLS tăng cường bảo mật trên đường truyền.\nTrong quá trình phát triển website, mỗi lần update source code dưới local, để deploy lên S3, cung cấp cho người dùng thông tin mới nhất, các bạn cần thực hiện các bước sau:\nBước 1: Sau khi chỉnh sửa dưới local, các bạn manual copy cập nhật lên S3 bucket. Bước 2: Thực hiện invalidateCDN CloudFront (CloudFront sẽ xóa bỏ nội dung cũ đang được cache tại các Edge Location, và thực hiện renew cache nội dung mới nhất của website, để phân phối phía người dùng). Vậy có cách nào có thể tự động deploy code mới nhất được update dưới local lên S3 bucket, và tự động renew nội dung cache tại CloudFront? Để thực hiện được điều đó, bài lab này sẽ hướng dẫn bạn tận dụng tính năng GitHub Actions của GitHub để xây dựng workflow tự động deploy và review nội dung mới nhất tới người dùng.\nNội dung 6.1. Tạo IAM User với policies quyền deploy và invalidateCDN 6.2. Thiết lập Hugo deploy 6.3. Tạo workflow với GitHub Actions 6.4. Kiểm tra workflow\n"
+},
+{
+	"uri": "//localhost:1313/7-cleanup/",
+	"title": "Dọn dẹp tài nguyên",
+	"tags": [],
+	"description": "",
+	"content": "Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.\nClear S3 bucket Xóa S3 bucket Xóa CloudFront Distribution Xóa ACM Certificate Xóa DNS record sets Xóa User và Policies "
+},
+{
+	"uri": "//localhost:1313/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "//localhost:1313/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
